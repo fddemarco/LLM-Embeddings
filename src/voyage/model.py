@@ -2,6 +2,7 @@ import time
 import abc
 import enum
 
+import openai
 import voyageai
 
 from voyage import settings
@@ -45,6 +46,18 @@ class VoyageAiModel(Model):
         output = voyageai.get_embeddings(sentences, self.name)
         time.sleep(1)
         return output
+    
+class Ada2Model(Model):
+    def __init__(self):
+        self.client = openai.OpenAI(api_key=API_KEY)
+        super().__init__(8192, "ada-002")
+
+    def embed(self, sentences):
+        response = self.client.embeddings.create(
+            input=sentences,
+            model="text-embedding-ada-002"
+        )
+        return [data.embedding for data in response.data]
 
 
 class VoyageAiConfig(enum.Enum):

@@ -22,5 +22,5 @@ class ExperimentSuite:
     def compress(self, filename):
         with zipfile.ZipFile(f"{filename}.zip", mode="w") as archive:
             for exp in self.experiments:
-                archive.write(exp.embeddings_filename())
+                archive.write(exp.embeddings_filepath())
         return self

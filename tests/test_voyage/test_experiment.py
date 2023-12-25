@@ -43,12 +43,12 @@ def test_experiment_filename(
         pathlib.Path(data_path)
         / f"embeddings/embeddings-{experiment_year}-{experiment_name}.pkl"
     )
-    assert expected == voyage_experiment.embeddings_filename()
+    assert expected == voyage_experiment.embeddings_filepath()
 
 
 def test_save_embeddings(voyage_experiment, embeddings):
     voyage_experiment.save_embeddings(embeddings)
-    with open(voyage_experiment.embeddings_filename(), "rb") as f:
+    with open(voyage_experiment.embeddings_filepath(), "rb") as f:
         saved_embeddings = pickle.load(f)
     assert embeddings == saved_embeddings
 
