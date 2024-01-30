@@ -1,0 +1,69 @@
+import pickle
+
+import pandas as pd
+
+from llm_embeddings import settings
+
+
+DATA_FILENAME = "%s_truncated_data.parquet"
+SUBREDDIT_COL = "subreddit"
+TEXT_COL = "text"
+
+
+class Experiment:
+    def load_data(self):
+        return pd.read_parquet(self.data_filepath(), columns=[SUBREDDIT_COL, TEXT_COL])
+
+    def data_filepath(self):
+        return settings.get_data_path() / self.data_filename()
+
+    def data_filename(self):
+        raise NotImplementedError("Should be implemented in a subclass!")
+
+    def embeddings_filepath(self):
+        folder = settings.get_data_path() / "embeddings"
+        folder.mkdir(parents=True, exist_ok=True)
+        return folder / self.embeddings_filename()
+
+    def embeddings_filename(self):
+        raise NotImplementedError("Should be implemented in a subclass!")
+
+    def save_embeddings(self, embeddings):
+        filepath = self.embeddings_filepath()
+        with open(filepath, "wb") as f_out:
+            pickle.dump(embeddings, f_out, protocol=pickle.HIGHEST_PROTOCOL)
+
+
+class ExperimentReddit(Experiment):
+    def __init__(self, name, year):
+        self.name = name
+        self.year = year
+
+    def data_filename(self):
+        return DATA_FILENAME % self.year
+
+    def embeddings_filename(self):
+        return f"embeddings-{self.year}-{self.name}.pkl"
+
+
+class ExperimentSpeeches(Experiment):
+    def __init__(self, name):
+        self.name = name
+
+    def data_filename(self):
+        return "speech_dataset.parquet"
+
+    def embeddings_filename(self):
+        return f"embeddings-sotu-{self.name}.pkl"
+
+
+class ExperimentCustom(Experiment):
+    def __init__(self, name, data):
+        self.name = name
+        self.data = data
+
+    def load_data(self):
+        return self.data
+
+    def embeddings_filename(self):
+        return f"embeddings-{self.name}.pkl"
