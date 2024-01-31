@@ -6,8 +6,14 @@ class VoyageAiModel:
         self.client = voyageai.Client(api_key=api_key)
 
     def embed(self, texts):
-        if texts:
-            return self.client.embed(
-                texts, model="voyage-lite-01", input_type="document"
-            ).embeddings
-        raise ValueError("Input cannot be empty list")
+        if not texts:
+            raise ValueError("Input cannot be empty list")
+
+        if len(texts) > 128:
+            raise ValueError(
+                f"The batch size limit is 128. Your batch size is {len(texts)}"
+            )
+
+        return self.client.embed(
+            texts, model="voyage-lite-01", input_type="document"
+        ).embeddings
