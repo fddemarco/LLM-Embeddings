@@ -15,6 +15,7 @@ def test_01(api_key):
         model.embed([])
 
 
+@pytest.mark.slow
 def test_02(api_key, snapshot):
     model = api_models.VoyageAiModel(api_key)
     assert snapshot == model.embed(["Sample text"])
@@ -26,6 +27,7 @@ def test_03(api_key):
         model.embed(["Sample text {i}" for i in range(0, 129)])
 
 
+@pytest.mark.slow
 def test_04(api_key, snapshot):
     model = api_models.VoyageAiModel(api_key)
     assert snapshot == model.embed(["Sample text {i}" for i in range(0, 128)])
