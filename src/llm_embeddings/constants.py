@@ -1,2 +1,0 @@
-REPUBLICAN = "Republican"
-DEMOCRATS = "Democratic"
