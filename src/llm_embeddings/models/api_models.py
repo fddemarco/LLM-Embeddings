@@ -35,9 +35,13 @@ class VoyageAiModel(Model):
         self.client = voyageai.Client(api_key=api_key)
 
     def safe_embed(self, sentences):
+        response = self.get_response(sentences)
+        return response.embeddings
+
+    def get_response(self, sentences):
         return self.client.embed(
             sentences, model="voyage-lite-01", input_type="document", truncation=True
-        ).embeddings
+        )
 
     def truncate_sentences(self, sentences):
         return sentences
@@ -50,10 +54,17 @@ class Ada2Model(Model):
         self.embedding_encoding = "cl100k_base"
 
     def safe_embed(self, sentences):
-        response = self.client.embeddings.create(
+        response = self.get_response(sentences)
+        return [data.embedding for data in response.data]
+
+    def get_tokens_count(self, sentences):
+        response = self.get_response(sentences)
+        return [usage for _, usage in response.usage]
+
+    def get_response(self, sentences):
+        return self.client.embeddings.create(
             input=sentences, model="text-embedding-ada-002"
         )
-        return [data.embedding for data in response.data]
 
     def truncate_sentences(self, sentences):
         encoder = tiktoken.get_encoding(self.embedding_encoding)
