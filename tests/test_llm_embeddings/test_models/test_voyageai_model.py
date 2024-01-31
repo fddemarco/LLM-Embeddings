@@ -9,25 +9,26 @@ def fixture_api_key():
     return settings.get_config(settings.VOYAGEAI_API_KEY)
 
 
-def test_01(api_key):
-    model = api_models.VoyageAiModel(api_key)
+@pytest.fixture(name="model")
+def fixture_model(api_key):
+    return api_models.VoyageAiModel(api_key)
+
+
+def test_01(model):
     with pytest.raises(ValueError):
         model.embed([])
 
 
 @pytest.mark.slow
-def test_02(api_key, snapshot):
-    model = api_models.VoyageAiModel(api_key)
+def test_02(model, snapshot):
     assert snapshot == model.embed(["Sample text"])
 
 
-def test_03(api_key):
-    model = api_models.VoyageAiModel(api_key)
+def test_03(model):
     with pytest.raises(ValueError):
         model.embed(["Sample text {i}" for i in range(0, 129)])
 
 
 @pytest.mark.slow
-def test_04(api_key, snapshot):
-    model = api_models.VoyageAiModel(api_key)
+def test_04(model, snapshot):
     assert snapshot == model.embed(["Sample text {i}" for i in range(0, 128)])
