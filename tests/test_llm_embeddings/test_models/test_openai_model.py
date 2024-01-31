@@ -17,3 +17,8 @@ def fixture_model(api_key):
 @pytest.mark.slow
 def test_02(model, snapshot):
     assert snapshot == model.embed(["Sample text"])
+
+
+@pytest.mark.slow
+def test_03(model, snapshot):
+    assert snapshot == model.embed(["Sample text" * 8192])

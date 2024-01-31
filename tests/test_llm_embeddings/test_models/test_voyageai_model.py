@@ -32,3 +32,8 @@ def test_03(model):
 @pytest.mark.slow
 def test_04(model, snapshot):
     assert snapshot == model.embed(["Sample text {i}" for i in range(0, 128)])
+
+
+@pytest.mark.slow
+def test_05(model, snapshot):
+    assert snapshot == model.embed(["Sample text " * 4096])
