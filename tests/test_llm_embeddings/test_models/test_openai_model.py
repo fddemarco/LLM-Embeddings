@@ -26,5 +26,5 @@ def test_03(model, snapshot):
 
 @pytest.mark.slow
 def test_04(model):
-    sentences = model.truncate_sentences(["Sample text " * 8192])
+    sentences = model.truncate(["Sample text " * 8192])
     assert 8192 == model.get_tokens_count(sentences)[0]

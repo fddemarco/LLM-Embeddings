@@ -6,6 +6,7 @@ import voyageai
 class Model:
     def embed(self, sentences):
         self.assert_are_valid(sentences)
+        sentences = self.preprocess(sentences)
         sentences = self.truncate(sentences)
         return self.safe_embed(sentences)
 
@@ -26,6 +27,9 @@ class Model:
     def safe_embed(self, sentences):
         raise NotImplemented("Should be implemented in a subclass")
 
+    def preprocess(self, sentences):
+        return [sentence.replace("\n", " ") for sentence in sentences]
+
     def truncate(self, sentences):
         raise NotImplemented("Should be implemented in a subclass")
 
@@ -33,6 +37,7 @@ class Model:
 class VoyageAiModel(Model):
     def __init__(self, api_key) -> None:
         self.client = voyageai.Client(api_key=api_key)
+        self.n_dimensions = 1024
 
     def safe_embed(self, sentences):
         response = self.get_response(sentences)
@@ -51,6 +56,7 @@ class Ada2Model(Model):
     def __init__(self, api_key):
         self.client = openai.OpenAI(api_key=api_key)
         self.max_input_tokens = 8192
+        self.n_dimensions = 1536
         self.embedding_encoding = "cl100k_base"
 
     def safe_embed(self, sentences):
