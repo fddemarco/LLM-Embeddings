@@ -1,0 +1,22 @@
+SOTU_PATH = "data/embeddings-sotu-%s.parquet"
+
+ADA_MODEL = "ada-002"
+VOYAGE_MODEL = "voyage-lite-01"
+MODELS = [ADA_MODEL, VOYAGE_MODEL]
+
+REPUBLICAN_PARTY = "Republican"
+DEMOCRATS_PARTY = "Democratic"
+ALL_PARTY = "All"
+PARTIES = [REPUBLICAN_PARTY, DEMOCRATS_PARTY, ALL_PARTY]
+
+EXPERIMENT_COL = "Experiment"
+DATE_COL = "Date"
+DIMENSION_COL = "Timeness"
+K_COL = "k-NN"
+PARTY_COL = "Party"
+MODEL_COL = "Model"
+
+PRESIDENT_COL = "President"
+TEXT_COL = "Text"
+YEAR_COL = "Year"
+SPEECH_COLS = [PARTY_COL, PRESIDENT_COL, TEXT_COL, YEAR_COL]
