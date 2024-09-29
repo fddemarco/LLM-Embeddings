@@ -1,9 +1,9 @@
 import polars as pl
 import pytest
 
-from llm_embeddings import settings
-from llm_embeddings.models import api_models
-from llm_embeddings.models import datasets
+from timeness import settings
+from timeness.models import api_models
+from timeness.models import datasets
 
 
 @pytest.fixture(name="schema")
@@ -48,5 +48,6 @@ def test_01(snapshot, dataset, model):
     assert snapshot == dataset.embed_text(model)
 
 
+@pytest.mark.slow
 def test_02(snapshot, dataset, ada_model):
     assert snapshot == dataset.embed_text(ada_model)

@@ -1,7 +1,7 @@
 import pytest
 
-from llm_embeddings import settings
-from llm_embeddings.models import api_models
+from timeness import settings
+from timeness.models import api_models
 
 
 @pytest.fixture(name="api_key")
