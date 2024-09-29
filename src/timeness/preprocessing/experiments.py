@@ -1,6 +1,6 @@
 import polars as pl
 import numpy as np
-import constants
+import timeness.preprocessing.constants as constants
 
 
 def mean_experiment(

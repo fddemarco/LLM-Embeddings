@@ -1,5 +1,5 @@
 import polars as pl
-import constants
+import timeness.preprocessing.constants as constants
 
 
 def load_sotu_data(party, model):
