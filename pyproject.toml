@@ -19,6 +19,7 @@ seaborn = "^0.13.1"
 datasets = "^2.16.1"
 tokenizers = "^0.15.1"
 python-decouple = "^3.8"
+pydantic-settings = "^2.5.2"
 
 
 [tool.poetry.group.dev.dependencies]

@@ -1,9 +1,7 @@
-from decouple import config
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
-OPENAI_API_KEY = "OPENAI_API_KEY"
-VOYAGEAI_API_KEY = "VOYAGEAI_API_KEY"
-
-
-def get_config(env_var):
-    return config(env_var)
+class Settings(BaseSettings):
+    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
+    openai_api_key: str
+    voyageai_api_key: str
