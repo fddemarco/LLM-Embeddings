@@ -1,0 +1,7 @@
+prompt_template
+The year of <year>
+The year <year>
+The President of the USA in <year>
+The government of the USA in <year>
+"The government of the USA in <year>, led by a <party> President"
+"The government of the USA in <year>, led by <party> President <name>"
